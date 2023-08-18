@@ -1,0 +1,4 @@
+Api = {"url" : 1.232.21.01 , "port" : 5001}
+mongoUsuario = ""
+mongoPassword = ""
+mongoBD = ""
