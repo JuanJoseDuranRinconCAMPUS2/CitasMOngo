@@ -1,0 +1,99 @@
+use("db_campus_citas");
+db.especialidad.insertMany([
+    {
+        _id: 1,
+        esp_nombre: "Neurologia"
+    },
+    {
+        _id: 2,
+        esp_nombre: "Psicologia"
+    },
+    {
+        _id: 3,
+        esp_nombre: "Cardiologia"
+    }
+]);
+
+use("db_campus_citas");
+db.consultorio.insertMany([
+    {
+        _id: 1,
+        cons_nombre: "Consultorio de Neurologia"
+    },
+    {
+        _id: 2,
+        cons_nombre: "Consultorio de Psicologia"
+    },
+    {
+        _id: 3,
+        cons_nombre: "Consultorio de Cardiologia"
+    }
+]);
+
+use("db_campus_citas");
+db.medico.insertMany([
+    {
+        _id: 1,
+        med_nombreCompleto: "Juan Pedro",
+        med_consultorio: 1,
+        med_especialidad: 1
+    },
+    {
+        _id: 2,
+        med_nombreCompleto: "Maria Hernandez",
+        med_consultorio: 2,
+        med_especialidad: 2
+    },
+]);
+
+use("db_campus_citas");
+db.cita.insertMany([
+    {
+        _id: 1,
+        cit_fecha: new Date("2023-02-11"),
+        cit_estadoCita: 1,
+        cit_medico: 1,
+        cit_datosUsuario: 1
+    },
+    {
+        _id: 2,
+        cit_fecha: new Date("2023-01-01"),
+        cit_estadoCita: 2,
+        cit_medico: 2,
+        cit_datosUsuario: 2
+    },
+    {
+        _id: 3,
+        cit_fecha: new Date("2023-02-11"),
+        cit_estadoCita: 1,
+        cit_medico: 2,
+        cit_datosUsuario: 1
+    },
+    {
+        _id: 4,
+        cit_fecha: new Date("2023-02-11"),
+        cit_estadoCita: 1,
+        cit_medico: 1,
+        cit_datosUsuario: 1
+    },
+]);
+
+use("db_campus_citas");
+db.estado_cita.insertMany([
+    {
+        _id: 1,
+        estcita_nombre: "Aceptada"
+    },
+    {
+        _id: 2,
+        estcita_nombre: "Anulada"
+    },
+    {
+        _id: 3,
+        estcita_nombre: "Cancelada"
+    },
+    {
+        _id: 3,
+        estcita_nombre: "Realizada"
+    }
+]);
