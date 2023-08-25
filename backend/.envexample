@@ -1,4 +1,5 @@
-Api = {"url" : 1.232.21.01 , "port" : 5001}
-mongoUsuario = ""
-mongoPassword = ""
-mongoBD = ""
+MY_CONFIG={"hostname": "127.20.0.6", "port":5032}
+Atlas_User=""
+Atlas_Password=""
+Atlas_DB="db_campus_alquiler"
+Jwt_Primate_Key="Contraseña1234"
