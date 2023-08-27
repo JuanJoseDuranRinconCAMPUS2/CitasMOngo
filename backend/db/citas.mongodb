@@ -1,242 +1,381 @@
+//🪙Construccion de la Base de Datos de MongoDB🪙
+
+use("db_campus_citas");
+
+//🚧🥼Creacion de la coleccion especialidad🥼🚧
+
 use("db_campus_citas");
 db.createCollection("especialidad", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
             required: ["_id", "esp_nombre"],
+            title: "especialidad Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 esp_nombre: {
                     bsonType: "string",
-                    description: "el esp_nombre debe ser un string"
+                    description: "el 'esp_nombre' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 20
                 },
-                }
-              }
+            },
+            additionalProperties: false
         }
+    },
+    validationAction: "error",
+    validationLevel: "strict"
 });
+
+//🚧🏥Creacion de la coleccion consultorio🏥🚧
+
 use("db_campus_citas");
 db.createCollection("consultorio", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
             required: ["_id", "cons_nombre"],
+            title: "consultorio Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 cons_nombre: {
                     bsonType: "string",
-                    description: "el cons_nombre debe ser un string"
+                    description: "el 'cons_nombre' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 50
                 },
-                }
-              }
-        }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//🚧👨‍⚕️Creacion de la coleccion medico👨‍⚕️🚧
+
 use("db_campus_citas");
 db.createCollection("medico", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
-            required: ["_id", "med_nombreCompleto", "med_consultorio"],
+            required: ["_id", "med_nombreCompleto", "med_consultorio", "med_especialidad"],
+            title: "medico Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 med_nombreCompleto: {
                     bsonType: "string",
-                    description: "el med_nombreCompleto debe ser un string"
+                    description: "el 'med_nombreCompleto' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ. ]+$",
+                    maxLength: 120
                 },
                 med_consultorio: {
                     bsonType: "number",
-                    description: "el med_consultorio debe ser un numero positivo"
+                    description: "el 'med_consultorio' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 med_especialidad: {
                     bsonType: "number",
-                    description: "el med_especialidad debe ser un numero positivo"
+                    description: "el 'med_especialidad' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 }
-                }
-              }
-        }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//🚧📟Creacion de la coleccion cita📟🚧
+
 use("db_campus_citas");
 db.createCollection("cita", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
             required: ["_id", "cit_fecha", "cit_estadoCita", "cit_medico", "cit_datosUsuario"],
+            title: "cita Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 cit_fecha: {
                     bsonType: "date",
-                    description: "el cit_fecha debe ser una fecha"
+                    description: "el 'cit_fecha' debe ser una fecha"
                 },
                 cit_estadoCita: {
                     bsonType: "number",
-                    description: "el cit_estadoCita debe ser un numero positivo"
+                    description: "el 'cit_estadoCita' debe ser un numero positivo"
                 },
                 cit_medico: {
                     bsonType: "number",
-                    description: "el cit_medico debe ser un numero positivo"
+                    description: "el 'cit_medico' debe ser un numero positivo"
                 },
                 cit_datosUsuario: {
                     bsonType: "number",
-                    description: "el cit_datosUsuario debe ser un numero positivo"
+                    description: "el 'cit_datosUsuario' debe ser un numero positivo"
                 },
-                }
-              }
-        }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//🚧💊Creacion de la coleccion estado_cita💊🚧
+
 use("db_campus_citas");
 db.createCollection("estado_cita", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
             required: ["_id", "estcita_nombre"],
+            title: "estado_cita Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 estcita_nombre: {
                     bsonType: "string",
-                    description: "el estcita_nombre debe ser un string"
+                    description: "el 'estcita_nombre' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 20
                 }
-            }
-        }
-    }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//🚧🧑‍🦰Creacion de la coleccion usuario🧑‍🦰🚧
+
 use("db_campus_citas");
 db.createCollection("usuario", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
-            required: ["_id", "usu_nombre", "usu_segdo_nombre", "usu_primer_apellido", "usu_segdo_apellido", "usu_telefono", "usu_direccion", "usu_email", "usu_tipodoc", "usu_genero", "usu_acudiente"],
+            required: ["_id", "usu_nombre", "usu_segdo_nombre", "usu_primer_apellido_usuar", "usu_segdo_apellido_usuar", "usu_edad", "usu_telefono", "usu_direccion", "usu_email", "usu_tipodoc", "usu_genero", "usu_acudiente"],
+            title: "usuario Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 usu_nombre: {
                     bsonType: "string",
-                    description: "el usu_nombre debe ser un string"
+                    description: "el 'usu_nombre' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 50
                 },
                 usu_segdo_nombre: {
-                    bsonType: "string",
-                    description: "el usu_segdo_nombre debe ser un string"
+                    bsonType: ["string", "null"],
+                    description: "el 'usu_segdo_nombre' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 45
                 },
-                usu_primer_apellido: {
+                usu_primer_apellido_usuar: {
                     bsonType: "string",
-                    description: "el usu_primer_apellido debe ser un string"
+                    description: "el 'usu_primer_apellido_usuar' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 50
                 },
-                usu_segdo_apellido: {
+                usu_segdo_apellido_usuar: {
                     bsonType: "string",
-                    description: "el usu_segdo_apellido debe ser un string"
+                    description: "el 'usu_segdo_apellido_usuar' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 50
+                },
+                usu_edad: {
+                    bsonType: "number",
+                    description: "el 'usu_edad' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 usu_telefono: {
                     bsonType: "string",
-                    description: "el usu_telefono debe ser un string"
+                    description: "el 'usu_telefono' que debe contener numero",
+                    pattern: "^[0-9]+$",
+                    maxLength: 50
                 },
                 usu_direccion: {
                     bsonType: "string",
-                    description: "el usu_direccion debe ser un string"
+                    description: "el 'usu_direccion' debe ser un string",
+                    maxLength: 100
                 },
                 usu_email: {
                     bsonType: "string",
-                    description: "el usu_email debe ser un string"
+                    description: "el 'usu_email' debe ser un correo valido",
+                    pattern : "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+                    maxLength: 100
+                },
+                usu_tipodoc: {
+                    bsonType: "number",
+                    description: "el 'usu_tipodoc' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 usu_genero: {
                     bsonType: "number",
-                    description: "el usu_genero debe ser un numero positivo"
+                    description: "el 'usu_genero' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 usu_acudiente: {
-                    bsonType: "number",
-                    description: "el usu_acudiente debe ser un numero positivo"
+                    bsonType: ["number", "null"],
+                    description: "el 'usu_acudiente' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 }
-                }
-              }
-        }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//🚧👨Creacion de la coleccion acudiente👨🚧
+
 use("db_campus_citas");
 db.createCollection("acudiente", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
-            required: ["_id", "acu_nombreCompleto", "acu_telefono", "acu_dirrecion"],
+            required: ["_id", "acu_nombreCompleto", "acu_telefono", "acu_direccion"],
+            title: "acudiente Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 acu_nombreCompleto: {
                     bsonType: "string",
-                    description: "el acu_nombreCompleto debe ser un string"
+                    description: "el 'acu_nombreCompleto' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 100
                 },
                 acu_telefono: {
                     bsonType: "string",
-                    description: "el acu_telefono debe ser un string"
+                    description: "el 'acu_telefono' debe ser un string que debe contener numeros",
+                    pattern: "^[0-9]+$",
+                    maxLength: 100
                 },
-                acu_dirrecion: {
+                acu_direccion: {
                     bsonType: "string",
-                    description: "el acu_dirrecion debe ser un string"
+                    description: "el 'acu_dirrecion' debe ser un string",
+                    maxLength: 200
                 },
-                }
-              }
-        }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//🚧⚛️Creacion de la coleccion genero⚛️🚧
+
 use("db_campus_citas");
 db.createCollection("genero", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
             required: ["_id", "gen_nombre", "gen_abreviatura"],
+            title: "genero Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 gen_nombre: {
                     bsonType: "string",
-                    description: "el gen_nombre debe ser un string"
+                    description: "el 'gen_nombre' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 20
                 },
                 gen_abreviatura: {
                     bsonType: "string",
-                    description: "el gen_abreviatura debe ser un string"
+                    description: "el 'gen_abreviatura' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 20
                 }
-                }
-              }
-        }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//🚧🦊Creacion de la coleccion tipo_documento🦊🚧
+
 use("db_campus_citas");
 db.createCollection("tipo_documento", {
     validator: {
         $jsonSchema : {
             bsonType: "object",
             required: ["_id", "tipdoc_nombre", "tipdoc_abreviatura"],
+            title: "users Validation",
             properties: {
                 _id: {
                     bsonType: "number",
-                    description: "el _id debe ser un numero positivo"
+                    description: "el '_id' debe ser un numero positivo",
+                    pattern: "^[1-9][0-9]*$"
                 },
                 tipdoc_nombre: {
                     bsonType: "string",
-                    description: "el gen_nombre debe ser un string"
+                    description: "el 'tipdoc_nombre' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 20
                 },
                 tipdoc_abreviatura: {
                     bsonType: "string",
-                    description: "el gen_abreviatura debe ser un string"
+                    description: "el 'tipdoc_abreviatura' debe ser un string sin numeros o caracteres especiales",
+                    pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",
+                    maxLength: 20
                 }
-                }
-              }
-        }
+            },
+            additionalProperties: false
+         }
+     },
+     validationAction: "error",
+     validationLevel: "strict"
 });
+
+//}🚧🦊Creacion de la coleccion del manejo de autoincrementables🔗🚧
+
+use("db_campus_citas");
+db.createCollection("autoincrement");
+db.autoincrement.insertMany([
+    { _id: "especialidadId", sequence_value: 0 },
+    { _id: "consultorioId", sequence_value: 0 },
+    { _id: "medicoId", sequence_value: 0 },
+    { _id: "citaId", sequence_value: 0 },
+    { _id: "estado_citaId", sequence_value: 0 },
+    { _id: "usuarioId", sequence_value: 0 },
+    { _id: "acudienteId", sequence_value: 0 },
+    { _id: "generoId", sequence_value: 0 },
+    { _id: "tipo_documentoId", sequence_value: 0 }
+]);
 
 
 
