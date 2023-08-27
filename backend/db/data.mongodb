@@ -1,99 +1,367 @@
+//🪙Inyeccion de data a la Base de Datos de MongoDB🪙
+
+//🪓🥼Inyeccionde data a la coleccion especialidad🥼🪓
 use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
 db.especialidad.insertMany([
-    {
-        _id: 1,
-        esp_nombre: "Neurologia"
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Cardiología' 
     },
-    {
-        _id: 2,
-        esp_nombre: "Psicologia"
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Dermatología' 
     },
-    {
-        _id: 3,
-        esp_nombre: "Cardiologia"
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Gastroenterología' 
+    },
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Neurología' 
+    },
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Oftalmología' 
+    },
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Pediatría' 
+    },
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Psiquiatría' 
+    },
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Radiología' 
+    },
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Traumatología' 
+    },
+    { 
+        _id: Number(increment("especialidad")),
+        esp_nombre: 'Urología' 
     }
 ]);
 
+//🪓🥼Inyeccionde data a la coleccion consultorio🥼🪓
+
 use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
 db.consultorio.insertMany([
-    {
-        _id: 1,
-        cons_nombre: "Consultorio de Neurologia"
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Cardiología' 
     },
-    {
-        _id: 2,
-        cons_nombre: "Consultorio de Psicologia"
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Dermatología'
+     },
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Ginecología' 
     },
-    {
-        _id: 3,
-        cons_nombre: "Consultorio de Cardiologia"
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Neurología' }
+        ,
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Oftalmología'
+     },
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Ortopedia' },
+
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Pediatría' },
+
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Psiquiatría' 
+    },
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Traumatología' 
+    },
+    { 
+        _id: Number(increment("consultorio")),
+        cons_nombre: 'Consultorio de Urología' 
     }
 ]);
 
+//🪓🥼Inyeccionde data a la coleccion medico🥼🪓
+
 use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
 db.medico.insertMany([
-    {
-        _id: 1,
-        med_nombreCompleto: "Juan Pedro",
-        med_consultorio: 1,
-        med_especialidad: 1
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dr. Juan Pérez', 
+        med_consultorio: 1, 
+        med_especialidad: 1 
     },
-    {
-        _id: 2,
-        med_nombreCompleto: "Maria Hernandez",
-        med_consultorio: 2,
-        med_especialidad: 2
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dra. María Gómez', 
+        med_consultorio: 2, 
+        med_especialidad: 2 
     },
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dr. Luis Rodríguez', 
+        med_consultorio: 3, 
+        med_especialidad: 1 
+    },
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dra. Ana López', 
+        med_consultorio: 4, 
+        med_especialidad: 3 
+    },
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dr. Carlos Martínez', 
+        med_consultorio: 5, 
+        med_especialidad: 2 
+    },
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dra. Laura Fernández', 
+        med_consultorio: 6, 
+        med_especialidad: 3 
+    },
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dr. Pedro Ramírez', 
+        med_consultorio: 7, 
+        med_especialidad: 1 
+    },
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dra. Isabel Torres', 
+        med_consultorio: 8, 
+        med_especialidad: 2 
+    },
+    { 
+        _id: Number(increment("medico")), 
+        med_nombreCompleto: 'Dr. Andrés García',
+         med_consultorio: 9, 
+         med_especialidad: 3 
+        },
+    { 
+        _id: Number(increment("medico")),
+         med_nombreCompleto: 'Dra. Sofía Medina', 
+         med_consultorio: 10, 
+         med_especialidad: 1 
+    }
 ]);
 
-use("db_campus_citas");
-db.cita.insertMany([
-    {
-        _id: 1,
-        cit_fecha: new Date("2023-02-11"),
-        cit_estadoCita: 1,
-        cit_medico: 1,
-        cit_datosUsuario: 1
-    },
-    {
-        _id: 2,
-        cit_fecha: new Date("2023-01-01"),
-        cit_estadoCita: 2,
-        cit_medico: 2,
-        cit_datosUsuario: 2
-    },
-    {
-        _id: 3,
-        cit_fecha: new Date("2023-02-11"),
-        cit_estadoCita: 1,
-        cit_medico: 2,
-        cit_datosUsuario: 1
-    },
-    {
-        _id: 4,
-        cit_fecha: new Date("2023-02-11"),
-        cit_estadoCita: 1,
-        cit_medico: 1,
-        cit_datosUsuario: 1
-    },
-]);
+//🪓🥼Inyeccionde data a la coleccion medico🥼🪓
 
 use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+db.tipo_documento.insertMany([
+    { _id: Number(increment("tipo_documento")), tipdoc_nombre: 'Cedula de Ciudadania', tipdoc_abreviatura: 'CC' },
+    { _id: Number(increment("tipo_documento")), tipdoc_nombre: 'Tarjeta de Identidad', tipdoc_abreviatura: 'TI' },
+    { _id: Number(increment("tipo_documento")), tipdoc_nombre: 'Pasaporte', tipdoc_abreviatura: 'PA' },
+    { _id: Number(increment("tipo_documento")), tipdoc_nombre: 'Registro Civil', tipdoc_abreviatura: 'RC' }
+]);
+
+//🪓🥼Inyeccionde data a la coleccion genero🥼🪓
+
+use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+db.genero.insertMany([
+    { _id: Number(increment("genero")), gen_nombre: 'Hombre', gen_abreviatura: 'M' },
+    { _id: Number(increment("genero")), gen_nombre: 'Mujer', gen_abreviatura: 'F' },
+    { _id: Number(increment("genero")), gen_nombre: 'No binario', gen_abreviatura: 'NB' },
+    { _id: Number(increment("genero")), gen_nombre: 'Motor de lancha', gen_abreviatura: 'ML' },
+    { _id: Number(increment("genero")), gen_nombre: 'Otro', gen_abreviatura: 'Otro' }
+]);
+
+//🪓🥼Inyeccionde data a la coleccion acudiente🥼🪓
+
+use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+db.acudiente.insertMany([
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Juan Pérez', 
+        acu_telefono: '1234567890', 
+        acu_direccion: 'Calle 123 Ciudad A' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'María Gómez',
+        acu_telefono: '9876543210', 
+        acu_direccion: 'Avenida XYZ Ciudad B' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Pedro Rodríguez', 
+        acu_telefono: '5555555555', 
+        acu_direccion: 'Carrera ABC Ciudad C' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Laura Torres', 
+        acu_telefono: '9999999999', 
+        acu_direccion: 'Calle 456 Ciudad D' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Carlos Sánchez', 
+        acu_telefono: '1111111111', 
+        acu_direccion: 'Avenida QWE Ciudad E' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Ana López', 
+        acu_telefono: '2222222222', 
+        acu_direccion: 'Carrera ZXC Ciudad F' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Luisa Martínez', 
+        acu_telefono: '3333333333', 
+        acu_direccion: 'Calle 789 Ciudad G' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Roberto Herrera', 
+        acu_telefono: '4444444444', 
+        acu_direccion: 'Avenida RTY Ciudad H' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Sofía Ramírez', 
+        acu_telefono: '6666666666', 
+        acu_direccion: 'Carrera FGH Ciudad I' 
+    },
+    { 
+        _id: Number(increment("acudiente")), 
+        acu_nombreCompleto: 'Daniel Castro', 
+        acu_telefono: '7777777777', 
+        acu_direccion: 'Calle 246 Ciudad J' 
+    }
+]);
+
+//🪓🥼Inyeccionde data a la coleccion usuario🥼🪓
+
+use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+db.usuario.insertMany([
+    { _id: Number(increment("usuario")), usu_nombre: 'Juan', usu_segdo_nombre: 'Sebastián', usu_primer_apellido_usuar: 'González', usu_segdo_apellido_usuar: 'Sánchez', usu_edad: 32, usu_telefono: "31546343454", usu_direccion: 'Calle 123, Ciudad A', usu_email: 'juan@gmail.com', usu_tipodoc: 4, usu_genero: 1, usu_acudiente: null },
+    { _id: Number(increment("usuario")), usu_nombre: 'María', usu_segdo_nombre: 'Fernanda', usu_primer_apellido_usuar: 'López', usu_segdo_apellido_usuar: 'Gómez', usu_edad: 34, usu_telefono: "3012346545", usu_direccion: 'Avenida XYZ, Ciudad B', usu_email: 'maria@gmail.com', usu_tipodoc: 4, usu_genero: 2, usu_acudiente: null },
+    { _id: Number(increment("usuario")), usu_nombre: 'Pedro', usu_segdo_nombre: 'jose', usu_primer_apellido_usuar: 'Rodríguez', usu_segdo_apellido_usuar: 'Torres', usu_edad: 45, usu_telefono: "3123546523", usu_direccion: 'Carrera ABC, Ciudad C', usu_email: 'pedro@gmail.com', usu_tipodoc: 4, usu_genero: 1, usu_acudiente: null },
+    { _id: Number(increment("usuario")), usu_nombre: 'Laura', usu_segdo_nombre: 'Isabel', usu_primer_apellido_usuar: 'Torres', usu_segdo_apellido_usuar: 'Pérez', usu_edad: 17, usu_telefono: "3156544356", usu_direccion: 'Calle 456, Ciudad D', usu_email: 'laura@gmail.com', usu_tipodoc: 5, usu_genero: 2, usu_acudiente: 4 },
+    { _id: Number(increment("usuario")), usu_nombre: 'Carlos', usu_segdo_nombre: 'Andrés', usu_primer_apellido_usuar: 'Sánchez', usu_segdo_apellido_usuar: 'García', usu_edad: 53, usu_telefono: "3107654356", usu_direccion: 'Avenida QWE, Ciudad E', usu_email: 'carlos@gmail.com', usu_tipodoc: 4, usu_genero: 1, usu_acudiente: null },
+    { _id: Number(increment("usuario")), usu_nombre: 'Ana', usu_segdo_nombre: 'María', usu_primer_apellido_usuar: 'López', usu_segdo_apellido_usuar: 'Hernández', usu_edad: 12, usu_telefono: "3124568787", usu_direccion: 'Carrera ZXC, Ciudad F', usu_email: 'ana@gmail.com', usu_tipodoc: 5, usu_genero: 2, usu_acudiente: 6 },
+    { _id: Number(increment("usuario")), usu_nombre: 'Luisa', usu_segdo_nombre: null, usu_primer_apellido_usuar: 'Martínez', usu_segdo_apellido_usuar: 'Gómez', usu_edad: 43, usu_telefono: "3155554343", usu_direccion: 'Calle 789, Ciudad G', usu_email: 'luisa@gmail.com', usu_tipodoc: 4, usu_genero: 1, usu_acudiente: null },
+    { _id: Number(increment("usuario")), usu_nombre: 'Roberto', usu_segdo_nombre: null, usu_primer_apellido_usuar: 'Herrera', usu_segdo_apellido_usuar: 'López', usu_edad: 25, usu_telefono: "4444444444", usu_direccion: 'Avenida RTY, Ciudad H', usu_email: 'roberto@gmail.com', usu_tipodoc: 4, usu_genero: 2, usu_acudiente: null },
+    { _id: Number(increment("usuario")), usu_nombre: 'Sofía', usu_segdo_nombre: 'Alejandra', usu_primer_apellido_usuar: 'Ramírez', usu_segdo_apellido_usuar: 'Pérez', usu_edad: 31, usu_telefono: "6666666666", usu_direccion: 'Carrera FGH, Ciudad I', usu_email: 'sofia@gmail.com', usu_tipodoc: 4, usu_genero: 1, usu_acudiente: null },
+    { _id: Number(increment("usuario")), usu_nombre: 'Daniel', usu_segdo_nombre: 'Andrés', usu_primer_apellido_usuar: 'Castro', usu_segdo_apellido_usuar: 'González', usu_edad: 14, usu_telefono: "7777777777", usu_direccion: 'Calle 246, Ciudad J', usu_email: 'daniel@gmail.com', usu_tipodoc: 5, usu_genero: 2, usu_acudiente: 10 }
+]);
+
+//🪓🥼Inyeccionde data a la coleccion estado_cita🥼🪓
+
+use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
 db.estado_cita.insertMany([
     {
-        _id: 1,
-        estcita_nombre: "Aceptada"
+        _id: Number(increment("estado_cita")),
+        estcita_nombre: "Atendido"
     },
     {
-        _id: 2,
-        estcita_nombre: "Anulada"
+        _id: Number(increment("estado_cita")),
+        estcita_nombre: "En espera"
     },
     {
-        _id: 3,
-        estcita_nombre: "Cancelada"
-    },
-    {
-        _id: 3,
-        estcita_nombre: "Realizada"
+        _id: Number(increment("estado_cita")),
+        estcita_nombre: "Rechazado"
     }
+]);
+
+//🪓🥼Inyeccionde data a la coleccion cita🥼🪓
+
+use("db_campus_citas");
+function increment(coleccion) {
+    const sequenceDocument = db.autoincrement.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
+db.cita.insertMany([
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-11'), cit_estadoCita: 1, cit_medico: 1, cit_datosUsuario: 10 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-12'), cit_estadoCita: 2, cit_medico: 2, cit_datosUsuario: 9 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-13'), cit_estadoCita: 1, cit_medico: 3, cit_datosUsuario: 8 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-14'), cit_estadoCita: 2, cit_medico: 4, cit_datosUsuario: 7 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-15'), cit_estadoCita: 1, cit_medico: 5, cit_datosUsuario: 6 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-16'), cit_estadoCita: 3, cit_medico: 6, cit_datosUsuario: 5 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-17'), cit_estadoCita: 1, cit_medico: 7, cit_datosUsuario: 4 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-18'), cit_estadoCita: 2, cit_medico: 8, cit_datosUsuario: 3 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-19'), cit_estadoCita: 3, cit_medico: 9, cit_datosUsuario: 2 },
+    { _id: Number(increment("cita")), cit_fecha: new Date('2023-07-20'), cit_estadoCita: 2, cit_medico: 10, cit_datosUsuario: 1 }
 ]);
