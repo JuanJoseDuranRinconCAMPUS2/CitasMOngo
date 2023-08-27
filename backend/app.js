@@ -8,6 +8,7 @@ import AppEstadoCita from "./routes/Cestado_cita.js";
 import AppUsuario from "./routes/Cusuario.js";
 import AppAcudiente from "./routes/Cacudiente.js";
 import AppGenero from "./routes/Cgenero.js";
+import AppTipoDocumento from "./routes/tipoDocumento.js";
 
 console.clear();
 dotenv.config("../");
@@ -26,6 +27,7 @@ ApiCitas.use('/EstadoCita', AppEstadoCita);
 ApiCitas.use('/Usuario', AppUsuario);
 ApiCitas.use('/Acudiente', AppAcudiente);
 ApiCitas.use('/Genero', AppGenero);
+ApiCitas.use('/TipoDocumento', AppTipoDocumento);
 // ════════ ⋆★⋆ ════════
 
 //Rutas de validacion
