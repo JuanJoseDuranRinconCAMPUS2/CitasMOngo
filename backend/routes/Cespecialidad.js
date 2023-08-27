@@ -35,7 +35,7 @@ AppEspecialidad.post('/PostEspecialidad', limitPColecciones(42, "Especialidad"),
       }
 })
 
-AppEspecialidad.put('/PutEspecialidad', limitPColecciones(42, "Alquiler"), async (req, res) =>{
+AppEspecialidad.put('/PutEspecialidad', limitPColecciones(42, "Especialidad"), async (req, res) =>{
     if(!req.rateLimit) return;
     const id = parseInt(req.query.id, 10);
     let data = {...req.body}
@@ -44,7 +44,6 @@ AppEspecialidad.put('/PutEspecialidad', limitPColecciones(42, "Alquiler"), async
         let result = await especialidad.updateOne({ _id: id }, { $set: data })
         if (result.modifiedCount > 0) {
             res.status(200).send({status: 200, message: `Documento con el id ${id} se ha actualizado Correctamente`});
-            res.send("Documento actualizado correctamente");
         } else {
             result.matchedCount === 1
             ? res.status(200).send({ status: 200, message:`No se realizaron cambios en el documento con el id ${id}`})
