@@ -5,6 +5,7 @@ import AppConsultorio from "./routes/Cconsultorio.js";
 import AppMedico from "./routes/Cmedico.js";
 import AppCita from "./routes/Ccita.js";
 import AppEstadoCita from "./routes/Cestado_cita.js";
+import AppUsuario from "./routes/Cusuario.js";
 
 console.clear();
 dotenv.config("../");
@@ -20,6 +21,8 @@ ApiCitas.use('/Consultorio', AppConsultorio);
 ApiCitas.use('/Medico', AppMedico);
 ApiCitas.use('/Cita', AppCita);
 ApiCitas.use('/EstadoCita', AppEstadoCita);
+ApiCitas.use('/Usuario', AppUsuario);
+
 // ════════ ⋆★⋆ ════════
 
 //Rutas de validacion
