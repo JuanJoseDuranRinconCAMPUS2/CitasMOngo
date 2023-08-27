@@ -1,21 +1,16 @@
-import { MongoClient } from 'mongodb';
-import dotenv from "dotenv"
-console.clear
-dotenv.config("../");
-let mongo = process.env
-let con = undefined
-export async function con(uri) {
-
-    let URI= `mongodb+srv://${mongo.mongoUsuario}:${mongo.mongoPassword}@<clustername>.mongodb.net/${mongo.mongoBD}`
+import dotnev from "dotenv";
+import { MongoClient } from "mongodb";
+dotnev.config("../");
+export async function con() {
     try {
-        db = new MongoClient(uri);
-        console.log('Conectando.....');
-        await db.connect();
-        console.log('Coneccion completa');
- 
-        return db;
+        const uri = `mongodb+srv://${process.env.Atlas_User}:${process.env.Atlas_Password}@cluster0.ayssvt3.mongodb.net/${process.env.Atlas_DB}`;
+        const options = {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        };
+        const client = await MongoClient.connect(uri, options);
+        return client.db();
     } catch (error) {
-        console.error('Error al conectar', error);
-        process.exit();
+        return {status: 500, message: error}
     }
- }
+}
