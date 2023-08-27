@@ -1,6 +1,7 @@
 import express, { json } from "express"
 import dotenv from "dotenv"
 import AppEspecialidad from "./routes/Cespecialidad.js";
+import AppConsultorio from "./routes/Cconsultorio.js";
 console.clear();
 dotenv.config("../");
 
@@ -11,6 +12,8 @@ ApiCitas.use(express.json());
 //Rutas de validacion
 // ════════ ⋆★⋆ ════════
 ApiCitas.use('/Especialidad', AppEspecialidad);
+ApiCitas.use('/Consultorio', AppConsultorio);
+
 // ════════ ⋆★⋆ ════════
 
 //Rutas de validacion
