@@ -7,6 +7,7 @@ import AppCita from "./routes/Ccita.js";
 import AppEstadoCita from "./routes/Cestado_cita.js";
 import AppUsuario from "./routes/Cusuario.js";
 import AppAcudiente from "./routes/Cacudiente.js";
+import AppGenero from "./routes/Cgenero.js";
 
 console.clear();
 dotenv.config("../");
@@ -24,6 +25,7 @@ ApiCitas.use('/Cita', AppCita);
 ApiCitas.use('/EstadoCita', AppEstadoCita);
 ApiCitas.use('/Usuario', AppUsuario);
 ApiCitas.use('/Acudiente', AppAcudiente);
+ApiCitas.use('/Genero', AppGenero);
 // ════════ ⋆★⋆ ════════
 
 //Rutas de validacion
