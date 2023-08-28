@@ -74,7 +74,7 @@ AppMedico.get('/MedicosXEspecialidad', limitPColecciones(80, "Medico"), async (r
   if(!req.rateLimit) return;
   let especialidad = db.collection("especialidad");
   let result = await especialidad.findOne({ esp_nombre: req.body.especialidad });
-  if (result.length == 0) {
+  if (!result) {
     return res.status(404).send({ status: 404, message:`La especialidad con el nombre ${req.body.especialidad} no ha sido encontrado`});
   }
   let result2 = await medico.aggregate([  
