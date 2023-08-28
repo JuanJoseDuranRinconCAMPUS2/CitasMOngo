@@ -155,4 +155,20 @@ AppUsuario.get('/PacientesXMedico', limitPColecciones(40, "Usuario"), async (req
     errorcontroller(error)
   }
 })
+
+//6
+// Obtener las consultorías para un paciente específico (por ejemplo, paciente **con usu_id 1**)
+
+AppUsuario.get('/ConsultoriasXPaciente', limitPColecciones(40, "Usuario"), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let cita = db.collection("cita");
+  console.log(req.body.Id);
+  let result = await cita.find({ cit_datosUsuario: req.body.Id}).sort( { _id : 1}).toArray();
+  if (result.length == 0) {
+    return res.status(404).send({ status: 404, message:`La paciente con el id ${req.body.Id} no ha sido encontrado`});
+  }
+  res.send(result)
+
+})
+
 export default AppUsuario;
