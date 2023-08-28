@@ -77,4 +77,82 @@ AppUsuario.get('/UsuarioOrdenAZ', limitGColecciones(), async (req, res) =>{
   res.send(result)
 
 })
+
+// 5
+// Encontrar todos los pacientes que tienen citas con un médico específico (por ejemplo, el médico con **med_nroMatriculaProsional 1**)
+AppUsuario.get('/PacientesXMedico', limitPColecciones(40, "Usuario"), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let cita = db.collection("cita");
+  let medico = db.collection("medico");
+  try {
+    let result = await medico.findOne({ _id: req.body.medico_id });
+    if (!result) {
+      return res.status(404).send({ status: 404, message:`La medico con el id ${req.body.medico_id} no ha sido encontrado`});
+    }
+    let result2 = await cita.aggregate([  
+        {    
+            $lookup: {      
+                from: "usuario",     
+                localField: "cit_datosUsuario",      
+                foreignField: "_id",      
+                as: "usuarios"   
+             }  
+        },  
+        {    
+            $lookup: {      
+                from: "medico",     
+                localField: "cit_medico",      
+                foreignField: "_id",      
+                as: "medicos"   
+             }  
+        },  
+        {
+            $match: {
+                usuarios: { $ne: [] }, 
+                medicos: { $ne: [] },
+                cit_medico: { $eq: result._id }
+            }
+        },
+        {
+            $unwind: "$usuarios"
+        },
+        {
+            $unwind: "$medicos"
+        },
+        {
+            $set: { 
+                nombreUsuario: {
+                    $cond: {
+                        if: { $eq: ["$usuarios.usu_segdo_nombre", null] },
+                        then: "$usuarios.usu_nombre",
+                        else: {
+                          $concat: ["$usuarios.usu_nombre", " ", "$usuarios.usu_segdo_nombre"]
+                        }
+                    }
+                },
+                Medico: {
+                    $concat: ["El paciente tiene citas con el medico:", " ", "$medicos.med_nombreCompleto"]
+                }
+            }
+        },
+        {
+            $group: {
+                _id: "$usuarios._id",
+                nombreUsuario: {
+                    $first: "$nombreUsuario"
+                },
+                usu_primer_apellido_usuar: {
+                    $first: "$usuarios.usu_primer_apellido_usuar"
+                },
+                Medico: {
+                    $first: "$Medico"
+                }
+            }
+        }
+    ]).sort( { _id: 1 } ).toArray();
+    res.send(result2)
+  } catch (error) {
+    errorcontroller(error)
+  }
+})
 export default AppUsuario;
