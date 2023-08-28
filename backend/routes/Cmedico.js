@@ -66,4 +66,51 @@ AppMedico.delete('/DeleteMedico', limitDColecciones(), async (req, res) =>{
       }
 })
 
+//🪓🦊 Rutas Especiales
+
+// 3
+// Obtener todos los médicos de una especialidad específica (por ejemplo, **'Cardiología'**):
+AppMedico.get('/MedicosXEspecialidad', limitPColecciones(80, "Medico"), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let especialidad = db.collection("especialidad");
+  let result = await especialidad.findOne({ esp_nombre: req.body.especialidad });
+  if (result.length == 0) {
+    return res.status(404).send({ status: 404, message:`El consultorio con el nombre ${req.body.consultorio} no ha sido encontrado`});
+  }
+  let result2 = await medico.aggregate([  
+    {    
+        $lookup: {      
+            from: "especialidad",     
+            localField: "med_especialidad",      
+            foreignField: "_id",      
+            as: "especialidad"   
+         }  
+    },  
+    {
+        $match: {medicos: { $ne: [] }, med_especialidad: { $eq: result._id }}
+    },
+    {
+        $unwind: "$especialidad"
+    },
+    {
+        $set: { especialidad: "$especialidad.esp_nombre" }
+    },
+    {
+        $group: {
+            _id: "$_id",
+            med_nombreCompleto: {
+                $first: "$med_nombreCompleto"
+            },
+            med_especialidad: {
+                $first: "$med_especialidad"
+            },
+            especialidad: {
+                $first: "$especialidad"
+            }
+        }
+    }
+]).toArray();
+  res.send(result2)
+
+})
 export default AppMedico;
