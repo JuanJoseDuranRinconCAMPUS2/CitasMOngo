@@ -77,4 +77,63 @@ AppCita.get('/CitasOrdenFecha', limitGColecciones(), async (req, res) =>{
 
 })
 
+// 4
+// Encontrar la próxima cita para un paciente específico (por ejemplo, el paciente con **usu_id 1**)
+AppCita.get('/CitasXUsuario', limitPColecciones(80, "Citas"), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let usuario = db.collection("usuario");
+  try {
+    let result = await usuario.findOne({ _id: req.body.usu_id });
+    if (!result) {
+      return res.status(404).send({ status: 404, message:`La usuario con el id ${req.body.usu_id} no ha sido encontrado`});
+    }
+    let result2 = await usuario.aggregate([  
+      {    
+          $lookup: {      
+              from: "cita",     
+              localField: "_id",      
+              foreignField: "cit_datosUsuario",      
+              as: "citas"   
+          }  
+      },  
+      {
+          $match: {citas: { $ne: []}, _id: { $eq: result._id }}
+      },
+      {
+          $unwind: "$citas"
+      },
+      {
+          $set: { 
+              citas: "$citas.cit_fecha", 
+              nombreUsuario: {
+                  $cond: {
+                      if: { $eq: ["$usu_segdo_nombre", null] },
+                      then: "$usu_nombre",
+                      else: {
+                        $concat: ["$usu_nombre", " ", "$usu_segdo_nombre"]
+                      }
+                  }
+              } 
+          }
+      },
+      {
+          $group: {
+              _id: "$_id",
+              nombreUsuario: {
+                  $first: "$nombreUsuario"
+              },
+              usu_primer_apellido_usuar: {
+                  $first: "$usu_primer_apellido_usuar"
+              },
+              citas: {
+                  $first: "$citas"
+              }
+          }
+      }
+    ]).sort( { _id: 1, citas: 1 } ).toArray();
+    res.send(result2)
+  } catch (error) {
+    errorcontroller(error)
+  }
+})
 export default AppCita;
