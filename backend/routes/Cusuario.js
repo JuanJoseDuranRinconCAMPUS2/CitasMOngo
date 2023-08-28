@@ -66,4 +66,15 @@ AppUsuario.delete('/DeleteUsuario', limitDColecciones(), async (req, res) =>{
       }
 })
 
+//🪓🦊 Rutas Especiales
+
+//1 
+// Obtener todos los pacientes alfabéticamente
+
+AppUsuario.get('/UsuarioOrdenAZ', limitGColecciones(), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let result = await usuario.find({}).sort( { usu_nombre: 1, usu_primer_apellido_usuar: 1 } ).toArray();
+  res.send(result)
+
+})
 export default AppUsuario;
