@@ -66,4 +66,15 @@ AppCita.delete('/DeleteCita', limitDColecciones(), async (req, res) =>{
       }
 })
 
+//🪓🦊 Rutas Especiales
+
+// 2 
+// Obtener todas las citas por fechas
+AppCita.get('/CitasOrdenFecha', limitGColecciones(), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let result = await cita.find({}).sort( { cit_fecha: 1 } ).toArray();
+  res.send(result)
+
+})
+
 export default AppCita;
