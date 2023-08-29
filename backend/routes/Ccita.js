@@ -136,4 +136,18 @@ AppCita.get('/CitasXUsuario', limitPColecciones(80, "Citas"), async (req, res) =
     errorcontroller(error)
   }
 })
+
+//7
+// Encontrar todas las citas para un día específico (por ejemplo, **'2023-07-12'**)
+
+AppCita.get('/CitasXFecha', limitPColecciones(40, "Citas"), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let cita = db.collection("cita");
+  let result = await cita.find({ cit_fecha: new Date(req.body.fecha_Cita)}).sort( { _id : 1}).toArray();
+  if (result.length == 0) {
+    return res.status(404).send({ status: 404, message:`La cita con la fecha ${req.body.fecha_Cita} no ha sido encontrado`});
+  }
+  res.send(result)
+
+})
 export default AppCita;
