@@ -66,4 +66,66 @@ AppConsultorio.delete('/DeleteConsultorio', limitDColecciones(), async (req, res
       }
 })
 
+//🪓🦊 Rutas Especiales
+
+//10
+//Obtener los consultorio donde se aplicó las citas de un paciente (por ejemplo, el paciente con **usu_id 1**)
+AppConsultorio.get('/ConsultorioXPaciente', limitPColecciones(80, "Consultorios"), async (req, res) =>{
+  if(!req.rateLimit) return;
+  let usuario = db.collection("usuario");
+  let medico = db.collection("medico");
+  try {
+    let result = await usuario.findOne({ _id: req.body.usu_id });
+    if (!result) {
+      return res.status(404).send({ status: 404, message:`El paciente con el id ${req.body.usu_id} no ha sido encontrado`});
+    }
+    let result2 = await medico.aggregate([  
+      {    
+          $lookup: {      
+              from: "cita",     
+              localField: "_id",      
+              foreignField: "cit_medico",      
+              as: "citas"   
+           }  
+      },  
+      {    
+          $lookup: {      
+              from: "consultorio",     
+              localField: "_id",      
+              foreignField: "_id",      
+              as: "consultorios"   
+           }  
+      },  
+      {
+          $match: {citas: { $ne: [] } , "citas.cit_datosUsuario" : {$eq : req.body.usu_id}}
+      },
+      {
+          $unwind: "$citas"
+      },
+      {
+          $unwind: "$consultorios"
+      },
+      {
+          $set: { Consultorios: "$consultorios.cons_nombre" }
+      },
+      {
+          $group: {
+              _id: "$citas._id",
+              paciente_Id: {
+                  $first: "$citas.cit_datosUsuario"
+              },
+              med_nombreCompleto: {
+                  $first: "$med_nombreCompleto"
+              },
+              Consultorios: {
+                  $first: "$Consultorios"
+              }
+          }
+      }
+  ]).sort( { _id: 1, citas: 1 } ).toArray();
+    res.send(result2)
+  } catch (error) {
+    errorcontroller(error)
+  }
+})
 export default AppConsultorio;
