@@ -113,4 +113,42 @@ AppMedico.get('/MedicosXEspecialidad', limitPColecciones(80, "Medico"), async (r
   res.send(result2)
 
 })
+
+// 8
+// Obtener los médicos y sus consultorios
+AppMedico.get('/MedicosYConsultorios', limitGColecciones(), async (req, res) =>{
+    if(!req.rateLimit) return;
+    let result = await medico.aggregate([  
+        {    
+            $lookup: {      
+                from: "consultorio",     
+                localField: "med_consultorio",      
+                foreignField: "_id",      
+                as: "consultorios"   
+             }  
+        },  
+        {
+            $match: {consultorios: { $ne: [] }}
+        },
+        {
+            $unwind: "$consultorios"
+        },
+        {
+            $set: { consultorio: "$consultorios.cons_nombre" }
+        },
+        {
+            $group: {
+                _id: "$_id",
+                med_nombreCompleto: {
+                    $first: "$med_nombreCompleto"
+                },
+                consultorio: {
+                    $first: "$consultorio"
+                }
+            }
+        }
+    ]).sort( { _id: 1 } ).toArray();
+    res.send(result)
+
+})
 export default AppMedico;
