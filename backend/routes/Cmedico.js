@@ -151,4 +151,53 @@ AppMedico.get('/MedicosYConsultorios', limitGColecciones(), async (req, res) =>{
     res.send(result)
 
 })
+
+// 9
+// Contar el número de citas que un médico tiene en un día específico (por ejemplo, el médico con **med_nroMatriculaProsional 1 en '2023-07-12'**)
+AppMedico.get('/MedicosXNumCitasFechas', limitPColecciones(80, "Medico"), async (req, res) =>{
+    if(!req.rateLimit) return;
+    let cita = db.collection("cita");
+    let result = await medico.findOne({ _id: req.body.Id});
+    if (!result) {
+      return res.status(404).send({ status: 404, message:`El medico con el id ${req.body.Id} no ha sido encontrado`});
+    }
+    let result2 = await cita.findOne({ cit_medico: req.body.Id , cit_fecha: new Date(req.body.Fecha)});
+    if (!result2) {
+      return res.status(404).send({ status: 404, message:`El medico ${req.body.Id} no tiene ninguna fecha registrada a esta hora ${req.body.Fecha}`});
+    }
+    let result3 = await medico.aggregate([  
+        {    
+            $lookup: {      
+                from: "cita",     
+                localField: "_id",      
+                foreignField: "cit_medico",      
+                as: "citas"   
+             }  
+        },  
+        {
+            $match: {citas: { $ne: [] }, _id : {$eq : req.body.Id} , "citas.cit_fecha" : {$eq : new Date(req.body.Fecha)}}
+        },
+        {
+            $unwind: "$citas"
+        },
+        {
+            $set: { citas: "$citas" }
+        },
+        {
+            $group: {
+                _id: "$_id",
+                med_nombreCompleto: {
+                    $first: "$med_nombreCompleto"
+                },
+                fechaCitas: {
+                    $first: "$citas.cit_fecha"
+                },
+                totalCitas: {
+                    $sum: 1
+                }
+            }
+        }
+    ]).toArray();
+    res.send(result3);
+  })
 export default AppMedico;
